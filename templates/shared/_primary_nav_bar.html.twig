@@ -1,0 +1,992 @@
+<div id="mySidenav" class="sidenav visible-xs visible-sm hidden-md hidden-lg" style="width:0px">
+    <ul class="list-unstyled" id="menu_xs_sm">
+        {% if not app.getUser() %}
+            <li id="" onclick="sidebar_menu_call('element_1_xs_sm');">Test Prep <span class="sidebar_arrow glyphicon glyphicon-menu-right"></span></li>
+        {% else %}
+            <li id="" onclick="sidebar_menu_call('element_1_xs_sm');">My Dashboards <span class="sidebar_arrow glyphicon glyphicon-menu-right"></span></li>
+        {% endif %}
+
+        <!-- <li id="" onclick="sidebar_menu_call('element_2_xs_sm');">Directory <span class="sidebar_arrow glyphicon glyphicon-menu-right"></span></li> -->
+
+        <li id=""><a href="{#path("prepclass_landing_page_new")#}">PREP Classrooms</a></li>
+        <li id=""><a href="{#path("webinar_landing_page_new")#}">Webinars &amp; Meet-ups</a></li>
+
+        {% if not app.getUser() %}
+            {% if '/cat' in app.request.uri  %}
+                <li id=""><a href='{# path('school_apply') #}' >Apply</a></li>
+            {% else %}
+                <li id=""><a href="{# path("admission_v121") #}">Meet Schools</a></li>
+                <li id=""><a href='{# path('school_apply') #}' >Apply</a></li>
+            {% endif %}
+        {% else %}
+            {% if app.getUser().getDefaultStudyScheduleType() == "cat"  %}
+                <li id=""><a href='{# path('school_apply') #}' >Apply</a></li>
+            {% else %}
+                <li id="">
+                    {% if app.getUser().getV121User()[0] is defined %}
+                        <a href="{# path("v121dashboard") #}">Meet Schools</a>
+                    {% else %}
+                        <a href="{# path("admission_v121") #}">Meet Schools</a>
+                    {% endif %}
+                </li>
+                <li id=""><a href='{# path('school_apply') #}' >Apply</a></li>
+            {% endif %}
+        {% endif %}
+        <li><a href='{#path("package_landing_page")#}' class='footer_link'>Tutoring</a></li>
+        <li><a href='{#path("application_builder_home_page")#}' class="footer_link">Application Builder</a></li>
+
+        {% if app.getUser() %}
+            <li><a href='{#path("mylms")#}' class='footer_link'>My Classes</a></li>
+        {% endif %}
+    </ul>
+    <div id="sub_menu_mobile_view">
+        {% if not app.getUser() %}
+            <ul class="submenu_sm_xs list-unstyled" id="element_1_submenu">
+                <li onclick="back_btn_xs_menu();">
+                    <span class="back_arrow glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Back
+                </li>
+                <li class="submenu_heading">Test Prep</li>
+                <li>
+                    <a href="/gmat/">Free GMAT Prep</a>
+                </li>
+                <li>
+                    <a href="/gre/">Free GRE Prep</a>
+                </li>
+                <li>
+                    <a href="/sat/">Free SAT Prep</a>
+                </li>
+                <li>
+                    <a href="/lsat/">Free LSAT Prep</a>
+                </li>
+                <li>
+                    <a href="/cat/">Free CAT Prep</a>
+                </li>
+            </ul>
+        {% else %}
+            <ul class="submenu_sm_xs list-unstyled" id="element_1_submenu">
+                <li onclick="back_btn_xs_menu();">
+                    <span class="back_arrow glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Back
+                </li>
+                <li class="submenu_heading">My Dashboards</li>
+                <li>
+                    <a href="{{path("link_and_learn_homepage")}}">Home Dashboard</a>
+                </li>
+                <li>
+                    {% if app.getUser().getDefaultStudySchedule() %}
+                        <a href="{{path("link_and_learn_homepage_prep")}}">Test-Prep Dashboard</a>
+                    {% else %}
+                        <a href="#" onclick="_start_onboarding();">Test-Prep Dashboard</a>
+                    {% endif %}
+
+                </li>
+                <li>
+                    <a href="{{path("prepclassdashboard")}}">Prep Class Dashboard</a>
+                </li>
+                <li>
+                    <a href="{{path("webinardashboard")}}">Webinars Dashboard</a>
+                </li>
+                <li>
+                    <a href="{{path("v121dashboard")}}">Meet Schools</a>
+                </li>
+            </ul>
+        {% endif %}
+
+
+        <ul class="submenu_sm_xs list-unstyled" id="element_2_submenu">
+            <li onclick="back_btn_xs_menu();">
+                <span class="back_arrow glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Back
+            </li>
+            <li class="submenu_heading">Directory</li>
+            <li>
+                <a href="{# path("institute_homepage")#}">Programs</a>
+            </li>
+            <li>
+                <a href="/groups">Groups</a>
+            </li>
+            <li>
+                <a href="{# path("tutor_landing_page") #}">Tutors</a>
+            </li>
+            <li>
+                <a href="{# path("ac_landing_page") #}">Admissions Consultant</a>
+            </li>
+            <li>
+                <a href="{# path("partner_landing_page") #}">Partners</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--end of sidenav bar div-->
+
+<!--Start of nav bar Desktop version -->
+<div class="header_div">
+    <nav class="navbar navbar-default navbar-fixed-top _js_header_fix_no_fix" id="main">
+
+        {% if not app.getUser() %}
+            <!-- included new login/register form -->
+            {#% include "LinkAndLearnBundle:shared:_new_login_block.html.twig" %#}
+            <!-- included register confirmation modal -->
+            {#% include "LinkAndLearnBundle:shared:_email_verify_modal.html.twig" %#}
+        {% endif %}
+        <div class="container sm_view" style="min-height: 56px">
+            <!--QS Leap Header -->
+            <div class="navbar-header qsleap_logo_div">
+                <a href='{{ path('homepage') }}' ><img src="{# asset('images/Leap_Logo_Tagline.svg') #}" style="height:38px;margin-left: -3px;"></a>
+            </div>
+
+            <!--Desktop View Menu Items -->
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav main_nav_content hidden-xs hidden-sm">
+
+                    {% if not app.getUser() %}
+                    <li class="dropdown first_half">
+                        <a href="javascript:void(0)" class="dropdown-toggle" id="element_2_new" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Test Prep
+                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true" style=""></span>
+                        </a>
+                        <ul class="dropdown-menu menu_common" aria-labelledby="element_2_new">
+                            <li class="top_arrow zero_padding"></li>
+                            <!--Up arrow in the dropdown div -->
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 zero_padding menu_common_shadow menu_common_minheight">
+                                <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_shadow menu_common_minheight element_3_heading common_heading">
+                                    <li class="element_1_topic_0 hover_element" topic='1' subtopic='0'  onclick="openthenewpage(this);">
+                                        <a href="/gmat/">Free GMAT Prep</a>
+                                    </li>
+                                    <li class="element_1_topic_1 hover_element" topic='1' subtopic='1' onclick="openthenewpage(this);">
+                                        <a href="/gre/">Free GRE Prep</a>
+                                    </li>
+                                    <li class="element_1_topic_2 hover_element" topic='1' subtopic='2' onclick="openthenewpage(this);">
+                                        <a href="/sat/">Free SAT Prep</a>
+                                    </li>
+                                    <li class="element_1_topic_3 hover_element" topic='1' subtopic='3' onclick="openthenewpage(this);">
+                                        <a href="/lsat/">Free LSAT Prep</a>
+                                    </li>
+                                    <li class="element_1_topic_4 hover_element" topic='1' subtopic='4' onclick="openthenewpage(this);">
+                                        <a href="/cat/">Free CAT Prep</a>
+                                    </li>
+                                </div>
+                                <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_minheight common_sub_heading_section">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_1_sub_heading element_1_sub_topic_0">
+                                        <img src="{{ asset('images/allexams.jpg') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">Acing the GMAT made easy. And FREE!</p>
+                                        <hr class="common_border_bottom"/>
+                                         <a href="/gmat/" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_1_sub_heading element_1_sub_topic_1">
+                                        <img src="{{ asset('images/allexams.jpg') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">What if we told you that GRE prep can be made easy & absolutely free?</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="/gre/" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_1_sub_heading element_1_sub_topic_2">
+                                        <img src="{{ asset('images/allexams.jpg') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">The freeway to an awesome SAT score, is now here!</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="/sat/" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_1_sub_heading element_1_sub_topic_3">
+                                        <img src="{{ asset('images/allexams.jpg') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">The freeway to an awesome LSAT score, is now here!</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="/lsat/" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_1_sub_heading element_1_sub_topic_4">
+                                        <img src="{{ asset('images/allexams.jpg') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">Get the score that opens doors to top business schools in India</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="/cat/" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </li>
+                    {% else %}
+
+                    <li class="dropdown first_half">
+                        <a href="javascript:void(0)" class="dropdown-toggle" id="element_2_new" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            My Dashboards
+                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true" style=""></span>
+                        </a>
+                        <ul class="dropdown-menu menu_common" aria-labelledby="element_2_new">
+                            <li class="top_arrow zero_padding"></li>
+                            <!--Up arrow in the dropdown div -->
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 zero_padding menu_common_shadow menu_common_minheight">
+                                <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_shadow menu_common_minheight element_3_heading common_heading">
+
+                                    <li class="element_1_topic_0 hover_element" topic='1' subtopic='0'  onclick="openthenewpage(this);">
+                                        <a href="{{path("homepage")}}">Home Dashboard</a>
+                                    </li>
+                                    <li class="element_1_topic_1 hover_element" topic='1' subtopic='1' onclick="openthenewpage(this);">
+                                        {% if app.getUser().getDefaultStudySchedule() %}
+                                            <a href="{{path("homepage")}}">Test-Prep Dashboard</a>
+                                        {% else %}
+                                            <a href="#" onclick="_start_onboarding();">Test-Prep Dashboard</a>
+                                        {% endif %}
+                                    </li>
+                                    <li class="element_1_topic_2 hover_element" topic='1' subtopic='2' onclick="openthenewpage(this);">
+                                        <a href="{{path("homepage")}}">Prep Class Dashboard</a>
+                                    </li>
+                                    <li class="element_1_topic_3 hover_element" topic='1' subtopic='3' onclick="openthenewpage(this);">
+                                        <a href="{{path("homepage")}}">Webinars Dashboard</a>
+                                    </li>
+                                    <li class="element_1_topic_4 hover_element" topic='1' subtopic='4' onclick="openthenewpage(this);">
+                                        <a href="{{path("homepage")}}">Meet Schools</a>
+                                    </li>
+
+                                </div>
+                                <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_minheight common_sub_heading_section">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_1_sub_heading element_1_sub_topic_0">
+                                        <img src="{# asset('images/home_dashboard.png') #}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">This is your home-deck. Your higher-education prep journey begins here!</p>
+                                        <hr class="common_border_bottom"/>
+                                         <a href="{{path("link_and_learn_homepage")}}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Continue
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_1_sub_heading element_1_sub_topic_1">
+                                        <img src="{# asset('images/prep_dashboard.png') #}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">800+ Practice Questions & Solutions. For Free!</p>
+                                        <hr class="common_border_bottom"/>
+                                        {% if app.getUser().getDefaultStudySchedule() %}
+                                            <a href="{{path("link_and_learn_homepage_prep")}}" class="common_a ">
+                                        {% else %}
+                                            <a href="#" onclick="_start_onboarding();" class="common_a ">
+                                        {% endif %}
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Continue
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_1_sub_heading element_1_sub_topic_2">
+                                        <img src="{{ asset('images/prep_classroom_dashboard.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">30-Min Prep Classrooms. Math & Verbal. EVERYDAY!</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{path("prepclassdashboard")}}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Continue
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_1_sub_heading element_1_sub_topic_3">
+                                        <img src="{{ asset('images/webinars_dashboard.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">LIVE WEBINARS & ON-DEMAND WEBINARS. Everyday. Every Week.</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{path("webinardashboard")}}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Continue
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_1_sub_heading element_1_sub_topic_4">
+                                        <img src="{{ asset('images/virtual_meetings_dashboard.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">Speak Directly to Official Admissions Teams. Zero Service Fee!</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{path("v121dashboard")}}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Continue
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </li>
+
+
+                    {% endif %}
+
+
+                    {# <li class="dropdown first_half">
+                        <a href="javascript:void(0)" class="dropdown-toggle" id="element_2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Directory
+                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true" style=""></span>
+                        </a>
+                        <ul class="dropdown-menu menu_common" aria-labelledby="element_2">
+                            <li class="top_arrow zero_padding"></li>
+                            <!--Up arrow in the dropdown div -->
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 zero_padding menu_common_shadow menu_common_minheight">
+                                <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_shadow menu_common_minheight common_heading element_2_heading">
+                                    <li class="element_2_topic_0 hover_element" topic="2" subtopic="0" onclick="openthenewpage(this);">
+                                        <a href="{{ path("institute_homepage") }}">Programs</a>
+                                    </li>
+                                    <li class="element_2_topic_1 hover_element" topic="2" subtopic="1" onclick="openthenewpage(this);">
+                                        <a href="{{ path("institute_group_homepage") }}">Groups</a>
+                                    </li>
+                                    <li class="element_2_topic_2 hover_element" topic="2" subtopic="2" onclick="openthenewpage(this);">
+                                        <a href="{{ path("tutor_landing_page") }}">Tutors</a>
+                                    </li>
+                                    <li class="element_2_topic_3 hover_element" topic="2" subtopic="3" onclick="openthenewpage(this);">
+                                        <a href="{{ path("ac_landing_page") }}">Admissions Consultant</a>
+                                    </li>
+                                    <li class="element_2_topic_4 hover_element" topic="2" subtopic="4" onclick="openthenewpage(this);">
+                                        <a href="{{ path("partner_landing_page") }}">Partners</a>
+                                    </li>
+                                </div>
+                                <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_minheight common_sub_heading_section">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_2_sub_heading element_2_sub_topic_0">
+                                        <img src="{{ asset('images/university.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">Discover the right programs for you</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{ path("institute_homepage") }}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_2_sub_heading element_2_sub_topic_1">
+                                        <img src="{{ asset('images/groups.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">Connect and interact with your future batchmates</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="/groups" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_2_sub_heading element_2_sub_topic_2">
+                                        <img src="{{ asset('images/tutors.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">Experts who will help you achieve your dream score</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{ path("tutor_landing_page") }}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_2_sub_heading element_2_sub_topic_3">
+                                        <img src="{{ asset('images/tutors.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">Get Advice from Experts On Applications, Interview Prep</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{ path("ac_landing_page") }}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_2_sub_heading element_2_sub_topic_4">
+                                        <img src="{{ asset('images/tutors.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">Get Advice from Experts On Applications, Interview Prep</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{ path("partner_landing_page") }}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </li>#}
+
+                    {#<li class="dropdown first_half">
+                        <a href="javascript:void(0)" class="dropdown-toggle" id="element_3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Resources
+                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true" style=""></span>
+                        </a>
+                        <ul class="dropdown-menu menu_common" aria-labelledby="element_3">
+                            <li class="top_arrow zero_padding"></li>
+                            <!--Up arrow in the dropdown div -->
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 zero_padding menu_common_shadow menu_common_minheight">
+                                <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_shadow menu_common_minheight element_3_heading common_heading">
+                                    <li class="element_3_topic_0 hover_element" topic='3' subtopic="0" onclick="openthenewpage(this);">
+                                        <a href="/gmat/resources">GMAT</a>
+                                    </li>
+                                    <li class="element_3_topic_1 hover_element" topic='3' subtopic="1" onclick="openthenewpage(this);">
+                                        <a href="/gre/resources">GRE</a>
+                                    </li>
+                                    <li class="element_3_topic_2 hover_element" topic='3' subtopic="2" onclick="openthenewpage(this);">
+                                        <a href="/sat/resources">SAT</a>
+                                    </li>
+                                    <li class="element_3_topic_3 hover_element" topic='3' subtopic="3" onclick="openthenewpage(this);">
+                                        <a href="/lsat/resources">LSAT</a>
+                                    </li>
+                                    <li class="element_3_topic_4 hover_element" topic='3' subtopic="4" onclick="openthenewpage(this);">
+                                        <a href="/cat/resources">CAT</a>
+                                    </li>
+                                </div>
+                                <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_minheight common_sub_heading_section">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_3_sub_heading element_3_sub_topic_0">
+                                        <img src="{{ asset('images/resources.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">Prep Videos, Strategies & Tips, MBA Admissions Info</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="/gmat/resources" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_3_sub_heading element_3_sub_topic_1">
+                                        <img src="{{ asset('images/resources.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">Prep Strategies, Tips, GradSchool Admissions Info</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="/gre/resources" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_3_sub_heading element_3_sub_topic_2">
+                                        <img src="{{ asset('images/resources.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">
+                                            Prep Videos, Strategies, Tips, College Admissions</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="/sat/resources" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_3_sub_heading element_3_sub_topic_3">
+                                        <img src="{{ asset('images/resources.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">LSAT Strategies & Tips, College Admissions Info</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="/lsat/resources" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_3_sub_heading element_3_sub_topic_4">
+                                        <img src="{{ asset('images/resources.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">CAT Strategies & Tips, Info on MBA In India</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="/cat/resources" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </li> #}
+
+                    {# <li class="dropdown first_half">
+                        <a href="javascript:void(0)" class="dropdown-toggle" id="element_4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Q&A
+                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true" style=""></span>
+                        </a>
+                        <ul class="dropdown-menu menu_common" aria-labelledby="element_4">
+                            <li class="top_arrow zero_padding"></li>
+                            <!--Up arrow in the dropdown div -->
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 zero_padding menu_common_shadow menu_common_minheight">
+                                <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_shadow menu_common_minheight element_4_heading common_heading">
+                                    <li class="element_4_topic_0 hover_element" topic="4" subtopic="0" onclick="openthenewpage(this);">
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'gmat' }) }}">GMAT</a>
+                                    </li>
+                                    <li class="element_4_topic_1 hover_element" topic="4" subtopic="1" onclick="openthenewpage(this);">
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'gre' }) }}">GRE</a>
+                                    </</li>
+                                    <li class="element_4_topic_2 hover_element" topic="4" subtopic="2" onclick="openthenewpage(this);">
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'sat' }) }}">SAT</a>
+                                    </</li>
+                                    <li class="element_4_topic_3 hover_element" topic="4" subtopic="3" onclick="openthenewpage(this);">
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'lsat' }) }}">LSAT</a>
+                                    </</li>
+                                    <li class="element_4_topic_4 hover_element" topic="4" subtopic="4" onclick="openthenewpage(this);">
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'cat' }) }}">CAT</a>
+                                    </</li>
+                                    <li class="element_4_topic_5 hover_element" topic="4" subtopic="5" onclick="openthenewpage(this);">
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'general' }) }}">General</a>
+                                    </</li>
+                                </div>
+                                <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_minheight common_sub_heading_section">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_4_sub_heading element_4_sub_topic_0">
+                                        <img src="{{ asset('images/qa.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">GMAT Prep & Admissions | Questions, Solutions & Opinions</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'gmat' }) }}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_4_sub_heading element_4_sub_topic_1">
+                                        <img src="{{ asset('images/qa.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">GRE Prep & Admissions | Questions, Solutions & Opinions</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'gre' }) }}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_4_sub_heading element_4_sub_topic_2">
+                                        <img src="{{ asset('images/qa.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">SAT Prep & Admissions | Questions, Solutions & Opinions</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'sat' }) }}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_4_sub_heading element_4_sub_topic_3">
+                                        <img src="{{ asset('images/qa.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">LSAT Prep & Admissions | Questions, Solutions & Opinions</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'lsat' }) }}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_4_sub_heading element_4_sub_topic_4">
+                                        <img src="{{ asset('images/qa.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">CAT Prep & Admissions | Questions, Solutions & Opinions</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'cat' }) }}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_4_sub_heading element_4_sub_topic_5">
+                                        <img src="{{ asset('images/qa.png') }}" class="common_image"/>
+                                        <hr class="common_hr"/>
+                                        <p class="common_text">Q&A | By the community, for the community</p>
+                                        <hr class="common_border_bottom"/>
+                                        <a href="{{ path("qna_main_page",{ '_exam_slug' : 'general' }) }}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                    </ul>
+                </li> #}
+
+                <li class="first_half"><a href="{{path("homepage")}}">PREP Classrooms</a></li>
+                <li class="first_half"><a href="{{path("homepage")}}">Webinars &amp; Meet-ups</a></li>
+
+                {% if not app.getUser() %}
+                    {% if '/cat' in app.request.uri  %}
+                        <li class="first_half"><a href="{{ path("homepage") }}">Apply</a></li>
+                    {% else %}
+                        <li class="first_half"><a href="{{ path("homepage") }}">Meet Schools<span class="glyphicon glyphicon-menu-down" aria-hidden="true" style="visibility: hidden;"></span></a></li>
+                        <li class="first_half"><a href="{{ path("homepage") }}">Apply</a></li>
+                    {% endif %}
+                {% else %}
+                    {% if app.getUser().getDefaultStudyScheduleType() == "cat"  %}
+                        <li class="first_half"><a href="{{ path("homepage") }}">Apply</a></li>
+                    {% else %}
+                        <li class="first_half">
+                            {% if app.getUser().getV121User()[0] is defined %}
+                                <a href="{{ path("homepage") }}">Meet Schools<span class="glyphicon glyphicon-menu-down" aria-hidden="true" style="visibility: hidden;"></span></a>
+                            {% else %}
+                                <a href="{{ path("homepage") }}">Meet Schools<span class="glyphicon glyphicon-menu-down" aria-hidden="true" style="visibility: hidden;"></span></a>
+                            {% endif %}
+                        </li>
+                        <li class="first_half"><a href="{{ path("homepage") }}">Apply</a></li>
+                    {% endif %}
+                {% endif %}
+
+
+                <!-- <li class="dropdown first_half">
+                    <a href="javascript:void(0)" class="dropdown-toggle" id="element_5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admissions
+                        <span class="glyphicon glyphicon-menu-down" aria-hidden="true" style=""></span>
+                    </a>
+                    <ul class="dropdown-menu menu_common" aria-labelledby="element_5">
+                        <li class="top_arrow zero_padding"></li>
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 zero_padding menu_common_shadow menu_common_minheight">
+                            <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_shadow menu_common_minheight element_5_heading common_heading">
+                                {% if app.getUser() %}
+                                    {% if app.getUser().getV121User()[0] is defined %}
+                                        <li class="element_5_topic_0 hover_element" topic="5" subtopic='0' onclick="openthenewpage(this);">
+                                            <a href="{{ path("homepage") }}">Meet Schools</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="element_5_topic_0 hover_element" topic="5" subtopic="0" onclick="openthenewpage(this);">
+                                            <a href="{{ path("homepage") }}">Meet Schools</a>
+                                        </li>
+                                    {% endif %}
+                                {% else %}
+                                    <li class="element_5_topic_0 hover_element" topic="5" subtopic="0" onclick="openthenewpage(this);">
+                                        <a href="{{ path("homepage") }}">Meet Schools</a>
+                                    </li>
+                                {% endif %}
+
+                                <li class="element_5_topic_1 hover_element" topic="5" subtopic="1" onclick="openthenewpage(this);">
+                                    <a href="{{ path("homepage") }}">Profile Evaluation</a>
+                                </li>
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-lg-6 col-sm-6 zero_padding menu_common_minheight common_sub_heading_section">
+                                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_5_sub_heading element_5_sub_topic_0">
+                                    <img src="{{ asset('images/tutors.png') }}" class="common_image"/>
+                                    <hr class="common_hr"/>
+                                    <p class="common_text">Connect with Business School across the world through Virtual 121 meeting</p>
+                                    <hr class="common_border_bottom"/>
+                                    {% if app.getUser() %}
+                                        {% if app.getUser().getV121User() %}
+                                            <a href="{{ path("homepage") }}" class="common_a ">
+                                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                                &nbsp;Explore
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ path("homepage") }}" class="common_a ">
+                                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                                &nbsp;Explore
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        <a href="{{ path("homepage") }}" class="common_a ">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                            &nbsp;Explore
+                                        </a>
+                                    {% endif %}
+
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 common_sub_heading element_5_sub_heading element_5_sub_topic_1">
+                                    <img src="{{ asset('images/qa.png') }}" class="common_image"/>
+                                    <hr class="common_hr"/>
+                                    <p class="common_text">Match your profile with the class representative data from the previous batches of top bschools</p>
+                                    <hr class="common_border_bottom"/>
+                                    <a href="{{ path("homepage") }}" class="common_a ">
+                                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                        &nbsp;Explore
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>-->
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <!--Divider -->
+                <li>
+                    <span class="header_divider"><img src="{{ asset('images/divider.png') }}"></span></li>
+                <!--Sm & XS View Menu Button -->
+                <li class="dropdown xs_sm_visible visible-xs visible-sm second_half" style="position: absolute;left: 7px;">
+                    <a href="javascript:void(0)" class="menu_padding">
+                        <button class="btn" style="font-size: 12px;background-color: transparent;border: 1px solid #fff;color: #fff;padding: 8px 14px;margin-top: -3px;font-family:Nunito Sans" onclick="toggle();">Menu</button>
+                    </a>
+                </li>
+                <li class="dropdown xs_sm_visible second_half">
+                    <a href="javascript:void(0)" class="dropdown-toggle" id="search_icon" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="position: relative;">
+                        <i class="fa fa-search header_icons" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu menu_search_icon zero_padding" aria-labelledby="search_icon">
+                        <li class="top_arrow zero_padding"></li>
+                        <li>
+                            <input type="text" name="search" id="search-site-input" class="form-control" placeholder="Site Search" style="background-color: transparent;margin: 5px 0px 0px 0px;border: none !important;    width: 100%;"/>
+                            {#
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 zero_padding search_section">
+                                <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3 padding_zero_ten search_different_section">
+                                    <li class="search_heading_style">Page</li>
+                                    <div class="common_search_result">
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">Harvard business school</div>
+                                        </li>
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">Penn State Harrisburg</div>
+                                        </li>
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">Acton School of business, Hardin-Simmons University</div>
+                                        </li>
+                                    </div>
+                                    <li class="explore_more_page col-sm-12 col-xs-12">
+                                        <a href="#"><i class="glyphicon glyphicon-chevron-right explore_arrow"></i>Explore more Page</a>
+                                    </li>
+                                </div>
+                                <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3 padding_zero_ten search_different_section">
+                                    <li class="search_heading_style">Resource</li>
+                                    <div class="common_search_result">
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">The $3.6 Million MBA salary</div>
+                                        </li>
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">Channing Tatum Star in HBS's First-Ever "Live Case"</div>
+                                        </li>
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">8 Harvard Business School Women who Founded Great Startups</div>
+                                        </li>
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">How Many Top CEOs have an MBA?</div>
+                                        </li>
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">Same As It Ever Was:HBS's Class of 2016</div>
+                                        </li>
+                                    </div>
+                                    <li class="explore_more_page col-sm-12 col-xs-12">
+                                        <a href="#"><i class="glyphicon glyphicon-chevron-right explore_arrow"></i>Explore more Resource</a>
+                                    </li>
+                                </div>
+                                <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3 padding_zero_ten search_different_section">
+                                    <li class="search_heading_style">Group</li>
+                                    <div class="common_search_result">
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">The Wrong Type of Innovation and 'The Capitalist's Dilemma': MBA News</div>
+                                        </li>
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">Harvard Business School Increases Accessibility of MBA Program: MBA News</div>
+                                        </li>
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">'Field' Trips at Harvard Business School Promote Global Outlook: MBA News</div>
+                                        </li>
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">IIM-A appoints Harvard Laws Professor as New Director: MBA News</div>
+                                        </li>
+                                    </div>
+                                    <li class="explore_more_page col-sm-12 col-xs-12"><a href="#"><i class="glyphicon glyphicon-chevron-right explore_arrow"></i>Explore more Group</a></li>
+                                </div>
+                                <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3 padding_zero_ten search_different_section">
+                                    <li class="search_heading_style">People</li>
+                                    <div class="common_search_result">
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">QS World MBA Tour - London September 17th 2017</div>
+                                        </li>
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">Qs Connect 1-2-1 - London September 17th 2017</div>
+                                        </li>
+                                        <li class="search_bar_individual_div col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <img src="{{ asset('images/demo.png') }}" class="col-md-3 col-lg-3 col-sm-3 col-xs-3 search_image zero_padding">
+                                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 padding_zero_eight search_result">Qs Executive Connect - London September 17th 2017</div>
+                                        </li>
+                                    </div>
+                                    <li class="explore_more_page col-sm-12 col-xs-12">
+                                        <a href="#"><i class="glyphicon glyphicon-chevron-right explore_arrow"></i>Explore more People</a>
+                                    </li>
+                                </div>
+                            </div>
+                            #}
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown xs_sm_visible second_half" style="">
+                    <ul class="dropdown-menu menu_like_icon list-inline" aria-labelledby="like_icon" style="">
+                        <li class="top_arrow zero_padding"></li>
+                        <li class="find_us_div">
+                            <span class="find_us">Find us
+                                <i class="fa fa-angle-right find_us_arrow" aria-hidden="true"></i>
+                            </span>
+                        </li>
+                        <li class="li_padding">
+                            <a href="https://www.facebook.com/QSLEAP" target="_blank" rel="nofollow" class="zero_padding">
+                                <i class="fa fa-facebook-square facebook_color font_social_icon"></i>
+                            </a>
+                        </li>
+                        <li class="li_padding">
+                            <a href="https://twitter.com/qsleap" target="_blank" rel="nofollow" class="zero_padding">
+                                <i class="fa fa-twitter-square font_social_icon twitter_color"></i>
+                            </a>
+                        </li>
+                        <li class="li_padding">
+                            <a href="https://plus.google.com/+Qsleap-free-test-prep-site" target="_blank" rel="nofollow" class="zero_padding">
+                                <i class="fa fa-google-plus-square font_social_icon google_plus_color"></i>
+                            </a>
+                        </li>
+                        <li class="li_padding">
+                            <a href="https://in.linkedin.com/company/qs" target="_blank" rel="nofollow" class="zero_padding">
+                                <i class="fa fa-linkedin-square font_social_icon linkedin_color"></i>
+                            </a>
+                        </li>
+                        <li class="li_padding">
+                            <a href="https://www.youtube.com/channel/UCxZIiQKPbnSCUj0M2g6U3XA" target="_blank" rel="nofollow" class="zero_padding">
+                                <i class="fa fa-youtube-square font_social_icon youtude_color"></i>
+                            </a>
+                        </li>
+                        <li class="li_padding">
+                            <a href="https://www.instagram.com/qsleap/" target="_blank" rel="nofollow" class="zero_padding">
+                                <i class="fa fa-instagram font_social_icon instagram_color"></i>
+                            </a>
+                        </li>
+                        <li class="li_padding">
+                            <a href="https://in.pinterest.com/qsleap/" target="_blank" rel="nofollow" class="zero_padding">
+                                <i class="fa fa-pinterest-square font_social_icon pinterest_color"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--login user -->
+                {% if app.getUser() %}
+                    {% set unreadMessagesCount = unreadMessagesCount is defined? unreadMessagesCount: app.user.getUnreadMessagesCount %}
+                    <li class="second_half xs_sm_visible" style="">
+                        <a href="{{ path('list_private_messages', { 'message_type': 'inbox' }) }}">
+                            <i class="fa fa-envelope header_icons" aria-hidden="true">
+                                {% if unreadMessagesCount > 0 %}
+                                    <span class="badge bagde_alter" style="">{{ unreadMessagesCount }}</span>{% endif %}
+                            </i>
+                        </a>
+                    </li>
+
+                    {% set unreadUserNotificationsCount = unreadUserNotificationsCount is defined? unreadUserNotificationsCount: app.user.getUnreadUserNotificationsCount %}
+                    <li class="second_half xs_sm_visible" style="">
+                        <a href="{{ path('list_user_notifications') }}">
+                            <i class="fa fa-bell header_icons" aria-hidden="true">
+                                {% if unreadUserNotificationsCount > 0 %}
+                                    <span class="badge bagde_alter" style="">{{ unreadUserNotificationsCount }}</span>{% endif %}
+                            </i>
+                        </a>
+                    </li>
+
+                    <li class="dropdown xs_sm_visible loginuserdropdown second_half" style="min-height: 56px;">
+                        <a href="javascript:void(0)" class="dropdown-toggle" style="padding: 6px 15px 2px 7px !important;" role="button" data-toggle="dropdown" id="user_info" aria-haspopup="true" aria-expanded="false">
+                            <img src="{{ app.getUser().getAvatar() }}" class="img-circle col-lg-3 col-md-3 col-sm-3 col-xs-3" style="width:35px;height:35px;border:2px solid #f7b236;margin-right: 3px;padding: 0px;margin-top: 5px;">
+                            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 user_name_joined_date" style="padding: 2px 0px 0px;width: auto;color: #E2EEF7;font-size: 10px;font-weight: 400;">
+                                <p style="margin: 0px 0px -10px; width:80px;height: 20px;overflow: hidden;">{{app.getUser().getUserNicename()}}</p>
+                                <img src="{{ asset('images/border-line.png') }}" style="width:80px">
+                                <p style="margin: -8px 0px 0px;">Joined
+                                    {{app.getUser().getCreatedAt()|date("d/m/Y")}}</p>
+                            </div>
+                            <span class="glyphicon glyphicon-menu-down" style="top: 17px;left: 1px;font-size: 14px;margin:0px !important"></span>
+                        </a>
+                        <ul class="dropdown-menu menu_user_info" aria-labelledby="user_info">
+                            <span class="top_arrow"></span>
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 5px 0px;">
+                                <a class="btn menu_user_button" href="{{ path('user_profile', { 'encoded_user_id': app.getUser().getEncodedUserId() }) }}">
+                                    <i class="fa fa-street-view fa-lg"></i>&nbsp;My Profile</a>
+                                <a class="btn menu_user_button" href="{{ path('user_profile', { 'encoded_user_id': app.getUser().getEncodedUserId() }) }}?tab=privacy">
+                                    <i class="fa fa-lock fa-lg"></i>&nbsp;Privacy settings</a>
+                                <a class="btn menu_user_button" href="/app/logout">
+                                    <i class="fa fa-sign-out fa-lg"></i>&nbsp;Logout</a>
+                            </div>
+                        </ul>
+                    </li>
+
+                    {% else %}
+                        <style type="text/css">
+                            ._qs_login_btn_new{
+                                background-color: transparent;color: #fff;position: relative;top: 10px;padding: 8px 24px 8px 24px;border-radius: 3px;
+                            }
+
+                            @media (max-width: 768px) {
+                                ._qs_login_btn_new{
+                                    background-color: transparent;color: #fff;position: relative;top: -2px;padding: 8px 24px 8px 24px;border-radius: 3px;
+                                }
+                            }
+                        </style>
+                        <li class="dropdown xs_sm_visible second_half" style="">
+                          <button onclick="_get_loginform();" class="_qs_login_btn_new" style="font-size: 12px;border: 1px solid #fff;">Login</button>
+                        </li>
+                        {% if app.request.attributes.get('_route') != "home_page" and app.request.attributes.get('_route') != "webinar_landing_page_new" and app.request.attributes.get('_route') != "admission_v121" %}
+
+                             <li class="dropdown xs_sm_visible second_half" style="">
+                                <button id="{{app.request.attributes.get('_route')}}" class="btn center-block join_now_btn_hp" onclick="_get_registerform();" style='width: 125px;font-size: 12px;margin-top: 10px;padding: 7px 5px 7px 5px;box-shadow: 0 3px 0 0 #2ea920;border-radius: 7px;margin-left: 10px;background: #36bb1c;font-weight: 100;'>Join For Free </button>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        {% block breadcrum %}
+            {#% include "LinkAndLearnBundle:shared:_breadcrum.html.twig" %#}
+        {% endblock breadcrum %}
+
+    </nav>
+</div>
+
+<style>
+
+    .first_half{
+        margin-right: 10px;
+    }
+
+    .navbar-default .navbar-nav>li>a {
+    padding: 15px 0px !important;
+}
+
+    .menu_common_shadow a {
+        color: #333333;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .algolia-autocomplete {
+        width: 100%;
+    }
+    .common_a,
+    .common_text {
+        font-size: 12px !important;
+    }
+    @media (max-width: 1023px) and (min-width: 300px) {
+        ul.menu_search_icon {
+            min-height: initial !important;
+            right: -75px !important;
+        }
+    }
+    @media (max-width: 420px) and (min-width: 200px) {
+        .menu_search_icon li.top_arrow {
+            right: 185px !important;
+        }
+    }
+    @media (max-width: 1025px) and (min-width: 420px) {
+        .menu_search_icon li.top_arrow {
+            right: 135px !important;
+        }
+    }
+    .search_section {
+        border-top: 0;
+    }
+    ul.list-unstyled .breadCumMenu a {
+        padding: 14px 20px;
+        font-size: 14px;
+        font-weight: 400;
+        cursor: pointer;
+        color: #fff !important;
+    }
+
+    @media (max-width: 1200px){
+        .navbar-default .navbar-nav>li.first_half>a {
+            padding: 15px 0px !important;
+        }
+    }
+
+    @media (max-width: 1199px) and (min-width: 992px) {
+        nav#main {
+            margin-left: 0 !important;
+            transition: margin-left 0.0s;
+        }
+    }
+    .header_icons{
+        font-size: 20px !important;
+    }
+    .navbar-nav li a span{
+        margin:0 5px 0;
+    }
+</style>
